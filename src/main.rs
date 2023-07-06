@@ -1,5 +1,7 @@
-use num_bigint::BigUint;
+use num_bigint::{BigUint, BigInt, ToBigInt};
 use num_traits::Num;
+use babyjubjub_rs::*;
+use ff::*;
 
 fn main() {
     let num_str = "4338620300185947561074059802482547481416142213883829469920100239455078257889";
@@ -24,4 +26,20 @@ fn main() {
         let hex_string = format!("0x{:02x}", value);
         println!("{}", hex_string);
     }
+
+    let p: Point = Point {
+        x: Fr::from_str(
+            "17777552123799933955779906779655732241715742912184938656739573121738514868268",
+        )
+        .unwrap(),
+        y: Fr::from_str(
+            "2626589144620713026669568689430873010625803728049924121243784502389097019475",
+        )
+        .unwrap(),
+    };
+
+    let res_m = p.mul_scalar(&3.to_bigint().unwrap());
+    println!("{:?}", res_m.x);
+    println!("{:?}", res_m.y);
+    
 }
